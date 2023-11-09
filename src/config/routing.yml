@@ -1,0 +1,7 @@
+app_user:
+    resource: ../../src/Config/routes/user.yml
+    prefix: /
+
+app_publication:
+    resource: ../../src/Config/routes/publications.yml
+    prefix: /

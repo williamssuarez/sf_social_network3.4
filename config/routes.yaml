@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+app_end:
+  path: /today
+  controller: App\Controller\EndController::index
+
+app_inicio:
+  path: /beguiner
+  controller: App\Controller\InicioController::index
+
+
+
+
