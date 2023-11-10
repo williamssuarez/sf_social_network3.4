@@ -4,7 +4,7 @@ security:
         App\Entity\User:
             algorithm: bcrypt
             cost: 4
-
+    # Agregando metodo de autenticacion
     providers:
         user_db_provider:
             entity:
@@ -15,7 +15,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            anonymous: ~
             provider: user_db_provider
             form_login:
                 login_path: /login

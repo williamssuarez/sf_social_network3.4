@@ -13,6 +13,8 @@ use App\Entity\User;
 //SERVICIOS
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
@@ -21,13 +23,13 @@ class UserController extends AbstractController
 
     private $encoderFactory;
     private $session;
-    private $authenticationUtils;
+    private $authenticationUtilss;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory)
+    public function __construct(EncoderFactoryInterface $encoderFactory, SessionInterface $session, RequestStack $requestStack)
     {
         $this->encoderFactory = $encoderFactory;
-        $this->session = new Session();
-        $this->authenticationUtils = new AuthenticationUtils();
+        $this->session = $session;
+        $this->authenticationUtilss = new AuthenticationUtils($requestStack);
     }
 
     public function index(): Response
@@ -39,8 +41,8 @@ class UserController extends AbstractController
 
     public function login(Request $request): Response{
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $error = $this->authenticationUtilss->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtilss->getLastUsername();
 
         return $this->render('user/login.html.twig', array(
             'last_username' => $lastUsername,
@@ -114,8 +116,6 @@ class UserController extends AbstractController
                 else {
                     $status = "Este usuario o email ya existen";
                 }
-
-
 
             }
             //SI NO ES VALIDO
