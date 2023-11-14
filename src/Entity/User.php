@@ -27,63 +27,63 @@ class User implements UserInterface
      *
      * @ORM\Column(name="role", type="string", length=20, nullable=true, options={"default"="NULL"})
      */
-    private $role = 'NULL';
+    private $role = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $email = 'NULL';
+    private $email = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $name = 'NULL';
+    private $name = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="surname", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $surname = 'NULL';
+    private $surname = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $password = 'NULL';
+    private $password = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="nick", type="string", length=50, nullable=true, options={"default"="NULL"})
      */
-    private $nick = 'NULL';
+    private $nick = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="bio", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $bio = 'NULL';
+    private $bio = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="active", type="string", length=2, nullable=true, options={"default"="NULL"})
      */
-    private $active = 'NULL';
+    private $active = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $image = 'NULL';
+    private $image = '';
 
     //CREANDO METODOS PERSONALIZADOS
     public function getUsername(){
