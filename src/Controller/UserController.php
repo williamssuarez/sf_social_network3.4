@@ -21,6 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserController extends AbstractController
 {
 
+    //VARIABLES PARA LOS SERVICIOS
     private $encoderFactory;
     private $session;
     private $authenticationUtilss;
