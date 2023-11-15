@@ -8,7 +8,7 @@ security:
     providers:
         user_db_provider:
             entity:
-                class: App\Entity\User::class
+                class: App\Entity\User
                 property: email
     firewalls:
         dev:
@@ -22,7 +22,7 @@ security:
                 check_path: /login_check
             logout:
                 path: logout
-                target: /
+                target: /login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

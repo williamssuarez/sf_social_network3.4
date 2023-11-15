@@ -13,11 +13,6 @@ class PublicationController extends AbstractController
     {
 
 
-        echo "Publications Index";
-        die();
-
-        return $this->render('publication/index.html.twig', [
-            'controller_name' => 'PublicationController',
-        ]);
+        return $this->render('publication/home.html.twig');
     }
 }

@@ -10,7 +10,6 @@
             {{ dump(app.user) }}
         {% endif %}
 
-        {{ dump(app.user) }}
 
         <form action="{{ path('login_check') }}" method="post">
             <label>Email</label>
@@ -21,8 +20,8 @@
 
             <input type="submit" value="Entrar" class="btn btn-success"/>
             <input type="hidden" name="_target_path" value="/home"/>
-
         </form>
+
 
     </div>
 
