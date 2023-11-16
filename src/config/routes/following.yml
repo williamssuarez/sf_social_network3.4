@@ -1,0 +1,9 @@
+following_follow:
+    path: /follow
+    defaults: { _controller: App\Controller\FollowingController:follow }
+    methods: [POST]
+
+following_unfollow:
+    path: /unfollow
+    defaults: { _controller: App\Controller\FollowingController:unfollow }
+    methods: [POST]

@@ -20,3 +20,11 @@ user_nick_test:
 edit_user:
     path: /my-data
     defaults: { _controller: App\Controller\UserController:editUser }
+
+user_list:
+    path: /people
+    defaults: { _controller: App\Controller\UserController:users }
+
+user_search:
+    path: /search
+    defaults: { _controller: App\Controller\UserController:search }

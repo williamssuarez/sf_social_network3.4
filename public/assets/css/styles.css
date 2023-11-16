@@ -3,8 +3,26 @@ body{
     background: #eee;
 }
 
+/* HEADER */
+.navbar-collapse .avatar{
+    background: white;
+    border-radius: 500px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    float: left;
+    margin-right: 12px;
+    margin-top: -7px ;
+}
+
+.navbar-collapse .avatar img{
+    height: 100%;
+    text-align: center;
+}
+
 /* REGISTRO */
-.box-form{
+.box-form,
+.box-default{
     background: white;
     border: 1px solid #ccc;
     padding: 20px;
@@ -15,4 +33,24 @@ body{
 
 .box-form input{
     margin-bottom: 10px;
+}
+
+/* GENTE */
+.user-item .avatar{
+    background: #eee;
+    border-radius: 500px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    float: left;
+}
+
+.user-item .avatar img{
+    height: 100%;
+    text-align: center;
+}
+
+.user-item .user-item-content{
+    padding: 10px;
+    margin-left: 85px;
 }

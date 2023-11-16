@@ -20,6 +20,7 @@
             </script>
             <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
             <script src="{{ asset('assets/bootstrap/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery-ias.min.js') }}"></script>
             <!--<script src="{# as #}{ asset('RECURSOS/js/jquery-3.7.1.js') }}"></script>
             <script src="{# asdf #}{ asset('RECURSOS/bootstrap/js/bootstrap.min.js') }}"></script>-->
 
@@ -48,16 +49,41 @@
                                 <li>
                                     <a href="{{ path('login') }}">
                                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                                        &nbsp; <!-- el &nbsp; es para dar un espacio en el html -->
+                                    &nbsp; <!-- el &nbsp; es para dar un espacio en el html -->
                                         Entrar
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ path('register') }}">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                        &nbsp; <!-- el &nbsp; es para dar un espacio en el html -->
+                                    &nbsp; <!-- el &nbsp; es para dar un espacio en el html -->
                                         Registro
                                     </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('app_homepage') }}">
+                                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                        &nbsp;
+                                        Inicio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_list') }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        &nbsp;
+                                        Gente
+                                    </a>
+                                </li>
+                                <li>
+                                    <form action="{{ path('user_search') }}" class="navbar-form navbar-left">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Buscar Gente" name="search" />
+                                        </div>
+                                        <button type="submit" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </form>
                                 </li>
                             {% endif %}
                         </ul>
@@ -66,6 +92,15 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                                        <div class="avatar">
+                                            {% if app.user.image == null %}
+                                                <img src="{{ asset('assets/images/default.png') }}" />
+                                            {% else %}
+                                                <img src="{{ asset('uploads/users/'~app.user.image) }}"/>
+                                            {% endif %}
+                                        </div>
+
                                         {{ app.user.name }} {{ app.user.surname }}
                                         <span class="caret"></span>
                                     </a>

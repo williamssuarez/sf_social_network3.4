@@ -5,3 +5,7 @@ app_user:
 app_publication:
     resource: ../../src/Config/routes/publications.yml
     prefix: /
+
+app_following:
+    resource: ../../src/Config/routes/following.yml
+    prefix: /

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class UserController extends AbstractController
@@ -28,12 +29,17 @@ class UserController extends AbstractController
     private $encoderFactory; //SERVICIO DE ENCRIPTACION
     private $session; //SERVICIO DE SESION
     private $authenticationUtilss; //SERVICIO DE AUTENTICACION
+    private $paginator; //SERVICIO DE PAGINACION KNP
 
-    public function __construct(EncoderFactoryInterface $encoderFactory, SessionInterface $session, RequestStack $requestStack)
+    public function __construct(EncoderFactoryInterface $encoderFactory,
+                                SessionInterface $session,
+                                RequestStack $requestStack,
+                                PaginatorInterface $paginator)
     {
         $this->encoderFactory = $encoderFactory;
         $this->session = $session;
         $this->authenticationUtilss = new AuthenticationUtils($requestStack);
+        $this->paginator = $paginator;
     }
 
     public function login(Request $request): Response{
@@ -198,8 +204,9 @@ class UserController extends AbstractController
                 //OBTENER EL RESULTADO
                 $user_isset = $query->getResult();
 
+
                 //SI LA VARIABLE ESTA VACIA ES QUE NO EXISTE EL EMAIL O EL NICK
-                if ( ($user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick()) || count($user_isset) == 0){
+                if (count($user_isset) == 0 || ($user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick())){
 
                     //SUBIENDO IMAGEN
                     $file = $form["image"]->getData();
@@ -251,5 +258,53 @@ class UserController extends AbstractController
             "form" => $form->createView()
         ));
 
+    }
+
+    //PARA LISTAR A LOS USUARIOS EN LA RUTA PEOPLE
+    public function users(Request $request): Response {
+
+        //OBTENIENDO DOCTRINE
+        $em = $this->getDoctrine()->getManager();
+
+        $dql = "SELECT u FROM App\Entity\User u ORDER BY u.id ASC";
+        $query = $em->createQuery($dql);
+
+        //$paginator = $this->get('knp_paginator');
+        $pagination = $this->paginator->paginate(
+            $query, $request->query->getInt('page', 1), 5
+        );
+
+        return $this->render('user/users.html.twig', array(
+            'pagination' => $pagination
+        ));
+    }
+
+    //PARA BUSCAR A LOS USUARIOS EN LA RUTA SEARCH
+    public function search(Request $request): Response {
+
+        //OBTENIENDO DOCTRINE
+        $em = $this->getDoctrine()->getManager();
+
+        //OBTENIENDO LO INSERTADO EN EL FORMULARIO
+        $search = $request->query->get("search", null);
+
+        if($search == null){
+            return $this->redirect($this->generateUrl('app_homepage'));
+        }
+
+        $dql = "SELECT u FROM App\Entity\User u 
+                WHERE u.name LIKE :search 
+                OR u.surname LIKE :search 
+                OR u.nick LIKE :search ORDER BY u.id ASC";
+        $query = $em->createQuery($dql)->setParameter('search', "%$search%") ;
+
+        //$paginator = $this->get('knp_paginator');
+        $pagination = $this->paginator->paginate(
+            $query, $request->query->getInt('page', 1), 5
+        );
+
+        return $this->render('user/users.html.twig', array(
+            'pagination' => $pagination
+        ));
     }
 }
