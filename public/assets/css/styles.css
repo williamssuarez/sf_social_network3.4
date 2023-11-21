@@ -35,8 +35,9 @@ body{
     margin-bottom: 10px;
 }
 
-/* GENTE */
-.user-item .avatar{
+/* GENTE Y TIMELINE */
+.user-item .avatar,
+.publication-item .avatar{
     background: #eee;
     border-radius: 500px;
     width: 75px;
@@ -45,12 +46,81 @@ body{
     float: left;
 }
 
-.user-item .avatar img{
+.user-item .avatar img,
+.publication-item .avatar img{
     height: 100%;
     text-align: center;
 }
 
-.user-item .user-item-content{
+.user-item .user-item-content,
+.publication-item .publication-item-content{
     padding: 10px;
     margin-left: 85px;
+}
+
+/* HOME */
+#timeline {
+    margin-right: 20px;
+    min-height: 750px;
+    padding-bottom: 20px;
+}
+
+.box-header{
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    padding-top: 0px;
+    font-size: 25px;
+}
+
+#user-card{
+
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#user-card .avatar{
+    background: #eee;
+    border-radius: 500px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    float: left;
+}
+
+#user-card .avatar img{
+    height: 100%;
+    text-align: center;
+}
+
+#user-card .avatar img.default{
+    opacity: 0.5;
+}
+
+#user-card .name-surname{
+    float: left;
+    font-size: 20px;
+    padding: 10px;
+}
+
+#user-card .name-surname a{
+    color: black;
+}
+
+#user-card .nickname{
+    opacity: 0.7;
+}
+
+#new-publication input,
+#new-publication textarea
+{
+    margin-bottom: 10px;
+}
+
+.pub-name-link{
+    font-weight: bold;
+    color: black;
+}
+
+.pub-date{
+    color: gray;
 }

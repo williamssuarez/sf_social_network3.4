@@ -22,44 +22,44 @@ class Publication
     private $id;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="text", type="text", length=16777215, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="text", type="text", length=16777215, nullable=true)
      */
-    private $text = 'NULL';
+    private $text = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="document", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="document", type="string", length=100, nullable=true)
      */
-    private $document = 'NULL';
+    private $document = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $image = 'NULL';
+    private $image = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="status", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="status", type="string", length=30, nullable=true)
      */
-    private $status = 'NULL';
+    private $status = '';
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $createdAt = 'NULL';
+    private $createdAt = '';
 
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
