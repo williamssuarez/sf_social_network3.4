@@ -90,7 +90,11 @@ class PublicationController extends AbstractController
                     $ext = $doc->guessExtension();
 
                     //SI LA EXTENSION ES ALGUNA DE ESTAS, ENTONCES ES VALIDA
-                    if ($ext == 'pdf' || $ext == 'xlsx'){
+                    if ($ext == 'pdf' ||  $ext == 'txt' ||
+                        $ext == 'xlsx' || $ext == 'xls' ||
+                        $ext == 'docx' || $ext == 'doc' ||
+                        $ext == 'pptx' || $ext == 'ppt' ||
+                        $ext == 'rar' || $ext == 'zip'){
 
                         //COMPONIENDO EL NOMBRE DEL DOCUMENTO CON LA ID DEL USUARIO, LA FECHA, Y LA EXTENSION
                         $file_name = $user->getId().time().".".$ext;
@@ -193,6 +197,33 @@ class PublicationController extends AbstractController
         );
 
         return $pagination;
+
+    }
+
+    //ELIMINAR PUBLICACIONES CON AJAX
+    public function removePublication(Request $request, $id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $publication_repo = $em->getRepository(\App\Entity\Publication::class);
+        $publication = $publication_repo->find($id);
+        $user = $this->getUser();
+
+        if($user->getId() == $publication->getUser()->getId() ){
+
+            $em->remove($publication);
+            $flush = $em->flush();
+
+            if ($flush == null){
+                $status = 'La publicacion se ha borrado correctamente';
+            } else {
+                $status = 'Ha ocurrido un error y no se pudo eliminar la publicacion';
+            }
+
+        } else {
+            $status = 'No puedes borrar la publicacion porque no te pertenece';
+        }
+
+        return new Response($status);
 
     }
 }

@@ -1,5 +1,10 @@
 {% extends 'layouts/layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/js/custom/home.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
     <div class="container">
@@ -27,11 +32,94 @@
                                 @{{ publication.user.nick }}
                                 -
                                 <span class="pub-date">
-                                    {{ publication.createdAt|date('d-m-y') }}
+                                    {{ publication.createdAt|long_time }}
                                 </span>
                             </p>
 
-                            {{ publication.text }}
+                            <p>{{ publication.text }}</p>
+
+                            {% if (publication.user.id is defined) and (publication.user.id == app.user.id) %}
+                                <span data-id="{{ publication.id }}" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            {% endif %}
+
+                            {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+                            {% if(publication.document is defined) and (publication.document != null) %}
+                                {# Obtener la cadena del documento #}
+                                {% set documento = publication.document %}
+
+                                {# Dividir la cadena utilizando el punto como separador #}
+                                {% set partes = documento|split('.') %}
+
+                                {# Obtener la última parte (extensión) #}
+                                {% set extension = partes|last %}
+
+                                {# Ahora puedes utilizar la extensión para decidir qué icono mostrar #}
+                                {% if extension == 'pdf' %}
+                                    {# Mostrar el icono para PDF #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-pdf glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-file-pdf" style="color: #c22929;"></i>
+                                    </a>
+
+                                {% elseif extension == 'xlsx' or extension == 'xls' %}
+                                    {# Mostrar el icono para Excel #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-excel glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-file-excel" style="color: #2eae1e;"></i>
+                                    </a>
+                                {% elseif extension == 'docx' or extension == 'doc' %}
+                                    {# Mostrar el icono para Word #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-word glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-file-word" style="color: #1a63e0;"></i>
+                                    </a>
+                                {% elseif extension == 'pptx' or extension == 'ppt' %}
+                                    {# Mostrar el icono para PowerPoint #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-powerpoint glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-file-powerpoint" style="color: #bf8a18;"></i>
+                                    </a>
+                                {% elseif extension == 'rar' or extension == 'zip' %}
+                                    {# Mostrar el icono para comprimidos #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-comprimido glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-folder" style="color: #b81dd7;"></i>
+                                    </a>
+                                {% elseif extension == 'txt' %}
+                                    {# Mostrar el icono para comprimidos #}
+
+                                    <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-texto glyphicon"
+                                       aria-hidden="true" target="_blank">
+                                        <i class="fa-solid fa-file" style="color: #696969;"></i>
+                                    </a>
+                                {% else %}
+                                    {# Mostrar un icono predeterminado para otras extensiones #}
+                                    <i class="fa fa-file"></i>
+                                {% endif %}
+                            {% endif %}
+                            {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+
+                            {% if(publication.image is defined) and (publication.image != null) %}
+                                <span class="btn-img glyphicon glyphicon-picture" aria-hidden="true"></span>
+                                <div class="clearfix"></div>
+
+                                <div class="pub-image">
+                                    <img src="{{ asset('uploads/publications/images/'~publication.image) }}">
+                                </div>
+                            {% endif %}
+
+                            <div class="pull-right like">
+                                <span data-id="{{ publication.id }}"
+                                      class="btn-like glyphicon glyphicon-heart-empty" aria-hidden="true"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Me gusta"></span>
+                            </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr/>

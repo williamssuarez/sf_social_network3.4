@@ -13,6 +13,11 @@ services:
         tags:
             - { name: twig.extension}
 
+    App\Twig\LongTimeExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

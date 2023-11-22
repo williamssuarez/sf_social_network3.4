@@ -47,6 +47,7 @@ function followButtons(){
             data: {followed: $(this).attr("data-followed")},
             success: function (response) {
                console.log(response);
+                alertify.success('Siguiendo al usuario').position('top-right');
             }
         });
     })
@@ -62,6 +63,7 @@ function followButtons(){
             data: {followed: $(this).attr("data-followed")},
             success: function (response) {
                 console.log(response);
+                alertify.error('Dejaste de seguir al usuario').position('top-right');
             }
         });
     })

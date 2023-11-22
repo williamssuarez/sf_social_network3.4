@@ -286,7 +286,7 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         //OBTENIENDO LO INSERTADO EN EL FORMULARIO
-        $search = $request->query->get("search", null);
+        $search = trim($request->query->get("search", null));
 
         if($search == null){
             return $this->redirect($this->generateUrl('app_homepage'));

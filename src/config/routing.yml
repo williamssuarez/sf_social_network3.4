@@ -9,3 +9,7 @@ app_publication:
 app_following:
     resource: ../../src/Config/routes/following.yml
     prefix: /
+
+app_like:
+    resource: ../../src/Config/routes/like.yml
+    prefix: /
