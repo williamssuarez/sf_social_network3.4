@@ -7,3 +7,11 @@ following_unfollow:
     path: /unfollow
     defaults: { _controller: App\Controller\FollowingController:unfollow }
     methods: [POST]
+
+following_users:
+    path: /following/{nickname}
+    defaults: { _controller: App\Controller\FollowingController:following, nickname: null }
+
+followed_users:
+    path: /followed/{nickname}
+    defaults: { _controller: App\Controller\FollowingController:followed, nickname: null }

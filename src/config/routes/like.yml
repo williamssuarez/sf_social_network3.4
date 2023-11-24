@@ -1,3 +1,11 @@
 like_publication:
   path: /like/{id}
   defaults: { _controller: App\Controller\LikeController:like, id: null }
+
+unlike_publication:
+  path: /unlike/{id}
+  defaults: { _controller: App\Controller\LikeController:unlike, id: null }
+
+user_likes:
+  path: /likes/{nickname}
+  defaults: { _controller: App\Controller\LikeController:likes, id: null }

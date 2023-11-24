@@ -307,4 +307,34 @@ class UserController extends AbstractController
             'pagination' => $pagination
         ));
     }
+
+    public function profile(Request $request, $nickname = null){
+        $em = $this->getDoctrine()->getManager();
+
+        if($nickname != null){
+            $user_repo = $em->getRepository(\App\Entity\User::class);
+            $user = $user_repo->findOneBy(array('nick' => $nickname));
+        } else {
+            $user = $this->getUser();
+        }
+
+        if(empty($user) || !is_object($user)){
+            return $this->redirect('home');
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT p FROM App\Entity\Publication p WHERE p.user = $user_id ORDER BY p.id DESC";
+        $query = $em->createQuery($dql);
+
+        $publications = $this->paginator->paginate(
+          $query,
+          $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('user/profile.html.twig', array(
+            'user' => $user,
+            'pagination' => $publications
+        ));
+    }
 }

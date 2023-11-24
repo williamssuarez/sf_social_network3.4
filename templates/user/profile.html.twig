@@ -1,0 +1,221 @@
+{% extends 'layouts/layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/js/custom/profile.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-10 box-default profile-box">
+
+        <div class="avatar">
+            {% if user.image == null %}
+                <img src="{{ asset('assets/images/default.png') }}">
+            {% else %}
+                <img src="{{ asset('uploads/users/'~user.image) }}"/>
+            {% endif %}
+        </div>
+
+        <div class="name-surname">
+            <h2>{{ user.name }} {{ user.surname }}</h2>
+            <div class="clearfix"></div>
+            <span class="nickname">
+                @{{ user.nick }}
+            </span>
+        </div>
+
+        <div class="bio">
+            {{ user.bio }}
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="user-stats">
+            {% set user_stats = user|user_stats %}
+
+            <div class="following-data">
+                <a href="{{ path('following_users', {'nickname': user.nick}) }}">
+                    <span class="label-stat">
+                        Siguiendo
+                    </span>
+                    <span class="number-stat">
+                        {{ user_stats.following }}
+                    </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="{{ path('followed_users', {'nickname': user.nick}) }}">
+                    <span class="label-stat">
+                        Seguidores
+                    </span>
+                    <span class="number-stat">
+                        {{ user_stats.followers }}
+                    </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stat">
+                        Publicaciones
+                    </span>
+                    <span class="number-stat">
+                        {{ user_stats.publications }}
+                    </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="{{ path('user_likes', {'nickname': user.nick}) }}">
+                    <span class="label-stat">
+                        Me gustas
+                    </span>
+                    <span class="number-stat">
+                        {{ user_stats.likes }}
+                    </span>
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="user-publications">
+
+            {% for publication in pagination %}
+                <div class="col-lg-12 publication-item">
+                    <div class="avatar">
+
+                        {% if publication.user.image == null %}
+                            <img src="{{ asset('assets/images/default.png') }}">
+                        {% else %}
+                            <img src="{{ asset('uploads/users/'~publication.user.image) }}"/>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="publication-item-content">
+                        <p>
+                            <a class="pub-name-link" href="#">
+                                {{ publication.user.name }} {{ publication.user.surname }}
+                            </a>
+                            -
+                            @{{ publication.user.nick }}
+                            -
+                            <span class="pub-date">
+                                    {{ publication.createdAt|long_time }}
+                                </span>
+                        </p>
+
+                        <p>{{ publication.text }}</p>
+
+                        {% if (publication.user.id is defined) and (publication.user.id == app.user.id) %}
+                            <span data-id="{{ publication.id }}" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        {% endif %}
+
+                        {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+                        {% if(publication.document is defined) and (publication.document != null) %}
+                            {# Obtener la cadena del documento #}
+                            {% set documento = publication.document %}
+
+                            {# Dividir la cadena utilizando el punto como separador #}
+                            {% set partes = documento|split('.') %}
+
+                            {# Obtener la última parte (extensión) #}
+                            {% set extension = partes|last %}
+
+                            {# Ahora puedes utilizar la extensión para decidir qué icono mostrar #}
+                            {% if extension == 'pdf' %}
+                                {# Mostrar el icono para PDF #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-pdf glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-file-pdf" style="color: #c22929;"></i>
+                                </a>
+
+                            {% elseif extension == 'xlsx' or extension == 'xls' %}
+                                {# Mostrar el icono para Excel #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-excel glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-file-excel" style="color: #2eae1e;"></i>
+                                </a>
+                            {% elseif extension == 'docx' or extension == 'doc' %}
+                                {# Mostrar el icono para Word #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-word glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-file-word" style="color: #1a63e0;"></i>
+                                </a>
+                            {% elseif extension == 'pptx' or extension == 'ppt' %}
+                                {# Mostrar el icono para PowerPoint #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-powerpoint glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-file-powerpoint" style="color: #bf8a18;"></i>
+                                </a>
+                            {% elseif extension == 'rar' or extension == 'zip' %}
+                                {# Mostrar el icono para comprimidos #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-comprimido glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-folder" style="color: #b81dd7;"></i>
+                                </a>
+                            {% elseif extension == 'txt' %}
+                                {# Mostrar el icono para comprimidos #}
+
+                                <a href="{{ asset('uploads/publications/documents/'~publication.document) }}" class="btn-doc-texto glyphicon"
+                                   aria-hidden="true" target="_blank">
+                                    <i class="fa-solid fa-file" style="color: #696969;"></i>
+                                </a>
+                            {% else %}
+                                {# Mostrar un icono predeterminado para otras extensiones #}
+                                <i class="fa fa-file"></i>
+                            {% endif %}
+                        {% endif %}
+                        {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+
+                        {% if(publication.image is defined) and (publication.image != null) %}
+                            <span class="btn-img glyphicon glyphicon-picture" aria-hidden="true"></span>
+                            <div class="clearfix"></div>
+
+                            <div class="pub-image">
+                                <img src="{{ asset('uploads/publications/images/'~publication.image) }}">
+                            </div>
+                        {% endif %}
+
+                        <div class="pull-right like">
+                                <span data-id="{{ publication.id }}"
+                                      class="
+                                        {% if app.user|liked(publication) == true %}
+                                            hidden
+                                        {% endif %}
+                                        btn-like glyphicon glyphicon-heart-empty" aria-hidden="true"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Me gusta"></span>
+
+                            <span data-id="{{ publication.id }}"
+                                  class="
+                                       {% if app.user|liked(publication) == false %}
+                                            hidden
+                                       {% endif %}
+                                       active btn-unlike glyphicon glyphicon-heart" aria-hidden="true"
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Ya no me gusta"></span>
+                        </div>
+                    </div>
+                <div class="clearfix"></div>
+                <hr/>
+                </div>
+            {% endfor %}
+
+            <div class="clearfix"></div>
+
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

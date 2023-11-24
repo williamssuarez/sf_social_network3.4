@@ -17,6 +17,8 @@ class FollowingExtension extends AbstractExtension
         $this->doctrine = $doctrine;
     }
 
+
+    //CREANDO EL FILTRO, COMO SE LLAMARA A LA FUNCION DESDE TWIG Y DONDE ESTA EL METODO A EJECUTAR
     public function getFilters(){
 
         return array(

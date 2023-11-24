@@ -42,13 +42,6 @@ class FollowingController extends AbstractController
         $this->paginator = $paginator;
     }
 
-    public function index(): Response
-    {
-        return $this->render('following/index.html.twig', [
-            'controller_name' => 'FollowingController',
-        ]);
-    }
-
     //FOLLOWING CON AJAX
     public function follow(Request $request) : Response {
 
@@ -102,6 +95,77 @@ class FollowingController extends AbstractController
         }
 
         return new Response($status);
+    }
 
+    public function following(Request $request, $nickname = null): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //OBTENEMOS EL USUARIO DEL REPOSITORIO DE USUARIOS
+        if($nickname != null){
+            //SI EL USUARIO NOS LLEGA POR URL LO SACAMOS DEL REPOSITORIO
+            $user_repo = $em->getRepository(\App\Entity\User::class);
+            $user = $user_repo->findOneBy(array('nick' => $nickname));
+        } else {
+            //CASO CONTRARIO SI NO LLEGA POR LA URL LO SACAMOS DEL USUARIO LOGEADO
+            $user = $this->getUser();
+        }
+
+        //SI NO SE ENCUENTRA REDIRIGIMOS A LA HOME
+        if(empty($user) || !is_object($user)){
+            return $this->redirect('home');
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT f FROM App\Entity\Following f WHERE f.user = $user_id ORDER BY f.id DESC";
+        $query = $em->createQuery($dql);
+
+        $following = $this->paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('following/follow.html.twig', array(
+            'type' => 'following',
+            'profile_user' => $user,
+            'pagination' => $following
+        ));
+    }
+
+    public function followed(Request $request, $nickname = null): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //OBTENEMOS EL USUARIO DEL REPOSITORIO DE USUARIOS
+        if($nickname != null){
+            //SI EL USUARIO NOS LLEGA POR URL LO SACAMOS DEL REPOSITORIO
+            $user_repo = $em->getRepository(\App\Entity\User::class);
+            $user = $user_repo->findOneBy(array('nick' => $nickname));
+        } else {
+            //CASO CONTRARIO SI NO LLEGA POR LA URL LO SACAMOS DEL USUARIO LOGEADO
+            $user = $this->getUser();
+        }
+
+        //SI NO SE ENCUENTRA REDIRIGIMOS A LA HOME
+        if(empty($user) || !is_object($user)){
+            return $this->redirect('home');
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT f FROM App\Entity\Following f WHERE f.followed = $user_id ORDER BY f.id DESC";
+        $query = $em->createQuery($dql);
+
+        $followed = $this->paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('following/follow.html.twig', array(
+            'type' => 'followed',
+            'profile_user' => $user,
+            'pagination' => $followed
+        ));
     }
 }
