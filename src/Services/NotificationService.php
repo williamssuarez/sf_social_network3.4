@@ -6,16 +6,19 @@ namespace App\Services;
 //ENTIDADES
 use App\Entity\Notification;
 
+//SERVICIOS
+use Doctrine\ORM\EntityManagerInterface;
+
 class NotificationService
 {
-    public $manager;
+    private $manager;
 
-    public function __construct($manager)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
     }
 
-    public function set($user, $type, $typeId, $extra){
+    public function set($user, $type, $typeId, $extra = null){
         $em = $this->manager;
 
         $notification = new Notification();
@@ -36,7 +39,29 @@ class NotificationService
         }
 
         return $status;
+    }
 
+    public function read($user){
+
+        $em = $this->manager;
+
+        $notifications_repo = $em->getRepository( \App\Entity\Notification::class);
+        $notifications = $notifications_repo->findBy(array('user' => $user ));
+
+        foreach ($notifications as $notification){
+            $notification->setReaded(1);
+            $em->persist($notification);
+        }
+
+        $flush = $em->flush();
+
+        if ($flush == null){
+            return true;
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
 }

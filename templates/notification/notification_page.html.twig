@@ -1,0 +1,55 @@
+{% extends 'layouts/layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-lg-12 box-default box-notifications">
+            <h1 class="box-header">Notificaciones</h1>
+
+            <div class="box-content">
+                {% for notification in pagination %}
+                    <div class="col-lg-12 notification-item">
+                        <div class="alert alert-default">
+
+                            <span class="glyphicon glyphicon-info-sign notif-icon" aria-hidden="true"></span>
+
+                            {% set notu = notification.typeId|get_user %}
+
+                            {% if notification.type == "follow" %}
+
+                                <div class="avatar">
+                                    {% if notu.image == null %}
+                                        <img src="{{ asset('assets/images/default.png') }}">
+                                    {% else %}
+                                        <img src="{{ asset('uploads/users/'~notu.image) }}"/>
+                                    {% endif %}
+                                </div>
+
+                                <a href="{{ path('user_profile', {'nickname': notu.nick}) }}">
+                                    {{ notu.name }} {{ notu.surname }}
+                                </a>
+                                te esta siguiendo
+                            {% endif %}
+
+                            {% if notification.type == "like" %}
+
+                                <div class="avatar">
+                                    {% if notu.image == null %}
+                                        <img src="{{ asset('assets/images/default.png') }}">
+                                    {% else %}
+                                        <img src="{{ asset('uploads/users/'~notu.image) }}"/>
+                                    {% endif %}
+                                </div>
+
+                                <a href="{{ path('user_profile', {'nickname': notu.nick}) }}">
+                                    {{ notu.name }} {{ notu.surname }}
+                                </a>
+                                le ha gustado tu publication
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

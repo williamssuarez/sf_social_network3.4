@@ -14,9 +14,16 @@ use App\Entity\Like;
 
 //SERVICIOS
 use Knp\Component\Pager\PaginatorInterface;
+use App\Services\NotificationService; //SERVICIO DE NOTIFICACION PERSONALIZADO POR WILLIAMS SUAREZ
 
 class LikeController extends AbstractController
 {
+    private $notification;
+
+    public function __construct(NotificationService $notification)
+    {
+        $this->notification = $notification;
+    }
 
     //METODO PARA LIKE POR AJAX
     public function like($id = null): Response
@@ -36,7 +43,11 @@ class LikeController extends AbstractController
         $flush = $em->flush();
 
         if($flush == null){
-           $status = 'Te ha gustado esta publicacion !!';
+
+            //CREANDO LA NOTIFICACION DEL LIKE
+            $notif = $this->notification->set($publication->getUser(), 'like', $user->getId(), $publication->getId());
+            //MENSAJE
+            $status = 'Te ha gustado esta publicacion !!';
         } else {
             $status = 'Ha ocurrido un error y no se ha podido guardar el me gusta';
         }

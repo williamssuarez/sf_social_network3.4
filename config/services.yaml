@@ -6,6 +6,12 @@
 parameters:
 
 services:
+    app.notification_service:
+        class: App\Services\NotificationService
+        autowire: false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     App\Twig\FollowingExtension:
         public: false
         arguments:
@@ -26,6 +32,13 @@ services:
             - { name: twig.extension }
 
     App\Twig\UserStatsExtension:
+        public: false
+        arguments:
+            $doctrine: "@doctrine"
+        tags:
+            - { name: twig.extension }
+
+    App\Twig\GetUserExtension:
         public: false
         arguments:
             $doctrine: "@doctrine"

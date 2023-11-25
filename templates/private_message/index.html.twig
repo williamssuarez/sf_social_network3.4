@@ -1,20 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/layout.html.twig' %}
 
-{% block title %}Hello PrivateMessageController!{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="col-lg-12 box-default">
+            <h1 class="box-header">
+                Mensajes Privados
+            </h1>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+            <div class="col-lg-7">
+                <h4>Enviar nuevo mensaje privado</h4>
+                {{ form_start(form, {'action':'', 'method':'POST' }) }}
+                {{ form_end(form) }}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Operador/curso_symfony4/src/Controller/PrivateMessageController.php'|file_link(0) }}">src/Controller/PrivateMessageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Operador/curso_symfony4/templates/private_message/home.html.twig'|file_link(0) }}">templates/private_message/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <br/>
+                <a href="{{ path('private_message_sended') }}" class="btn btn-warning">Ver mensajes enviados</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,7 @@
+private_message_index:
+  path: /private-message
+  defaults: { _controller: App\Controller\PrivateMessageController:index }
+
+private_message_sended:
+  path: /private-message/sended
+  defaults: { _controller: App\Controller\PrivateMessageController:sended }

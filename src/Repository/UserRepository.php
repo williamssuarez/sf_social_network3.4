@@ -8,6 +8,9 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
+//ENTIDADES EXTRAS
+use App\Entity\Following;
+
 /**
  * @extends ServiceEntityRepository<User>
  *
@@ -45,6 +48,39 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function getFollowingUsers($user)
+    {
+        //OBTENIENDO EL ENTITY MANAGER
+        $em = $this->getEntityManager();
+
+        //OBTENIENDO EL REPOSITORIO DE FOLLOWING
+        $following_repo = $em->getRepository(\App\Entity\Following::class);
+        //OBTENIENDO LOS USUARIOS QUE SIGUES
+        $following = $following_repo->findBy(array(
+            'user' => $user
+        ));
+
+        //CREANDO UN ARRAY DE APOYO
+        $following_array = array();
+
+        //GUARDANDO EN EL ARRAY LOS RESULTADOS DE LA QUERY
+        foreach ($following as $follow){
+            $following_array[] = $follow->getFollowed();
+        }
+
+        //OBTENIENDO EL REPOSITORIO DE USUARIOS PARA HACER LA PROXIMA QUERY
+        $user_repo = $em->getRepository(\App\Entity\User::class);
+        //PREPARANDO LA QUERY
+        $user_id = $user->getId();
+        $users = $user_repo->createQueryBuilder('u')
+                            ->where("u.id != (:user) AND u.id IN (:following)")
+                            ->setParameter("user", $user_id)
+                            ->setParameter("following", $following_array)
+                            ->orderBy('u.id', 'DESC');
+
+        return $users;
     }
 
     // /**

@@ -31,8 +31,8 @@
             <!-- ALERTIFY JS -->
             <script src="{{ asset('assets/alertifyjs/alertify.js') }}"></script>
             <script src="{{ asset('assets/alertifyjs/alertify.min.js') }}"></script>
-            <!--<script src="{# as #}{ asset('RECURSOS/js/jquery-3.7.1.js') }}"></script>
-            <script src="{# asdf #}{ asset('RECURSOS/bootstrap/js/bootstrap.min.js') }}"></script>-->
+            <!-- AJAX PERSONALIZADOS -->
+            <script src="{{ asset('assets/js/custom/common.js') }}"></script>
 
         {% endblock %}
     </head>
@@ -101,17 +101,20 @@
                         {% if app.user != null %}
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="{{ path('user_list') }}">
+                                    <a href="{{ path('private_message_index') }}">
                                         <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                         &nbsp;
                                         Mensajes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('user_list') }}">
+                                    <a href="{{ path('notifications_page') }}">
                                         <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
                                         &nbsp;
                                         Notificaciones
+                                        <span class="label label-success label-notifications">
+
+                                        </span>
                                     </a>
                                 </li>
                                 <li class="dropdown">

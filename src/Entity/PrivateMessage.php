@@ -24,9 +24,9 @@ class PrivateMessage
     /**
      * @var string|null
      *
-     * @ORM\Column(name="message", type="text", length=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="message", type="text", length=0, nullable=true)
      */
-    private $message = 'NULL';
+    private $message;
 
     /**
      * @var string|null

@@ -10,6 +10,14 @@ app_following:
     resource: ../../src/Config/routes/following.yml
     prefix: /
 
+app_notifications:
+    resource: ../../src/Config/routes/notifications.yml
+    prefix: /
+
 app_like:
     resource: ../../src/Config/routes/like.yml
+    prefix: /
+
+app_private_messages:
+    resource: ../../src/Config/routes/private_message.yml
     prefix: /

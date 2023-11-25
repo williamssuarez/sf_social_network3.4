@@ -263,6 +263,29 @@ body{
     font-weight: bold;
 }
 
+/* NOTIFICACIONES VISTA */
+.alert-default .avatar{
+    border-radius: 500px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    float: left;
+    margin-right: 12px;
+    margin-top: -7px;
+}
+
+.notif-icon{
+    float: left;
+    margin-right: 12px;
+    font-size: 30px;
+    margin-top: -7px;
+}
+
+.alert-default .avatar img{
+    height: 100%;
+    text-align: center;
+}
+
 /*PROBANDO ALERTAS*/
 .alertify-notifier {
     position: fixed;

@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Services\NotificationService; //SERVICIO PERSONALIZADO
 
 class FollowingController extends AbstractController
 {
@@ -30,16 +31,19 @@ class FollowingController extends AbstractController
     private $session; //SERVICIO DE SESION
     private $authenticationUtilss; //SERVICIO DE AUTENTICACION
     private $paginator; //SERVICIO DE PAGINACION KNP
+    private $notifications;
 
     public function __construct(EncoderFactoryInterface $encoderFactory,
                                 SessionInterface $session,
                                 RequestStack $requestStack,
-                                PaginatorInterface $paginator)
+                                PaginatorInterface $paginator,
+                                NotificationService $notification)
     {
         $this->encoderFactory = $encoderFactory;
         $this->session = $session;
         $this->authenticationUtilss = new AuthenticationUtils($requestStack);
         $this->paginator = $paginator;
+        $this->notifications = $notification;
     }
 
     //FOLLOWING CON AJAX
@@ -61,6 +65,9 @@ class FollowingController extends AbstractController
         $flush = $em->flush();
 
         if ($flush == null){
+            //CREANDO NOTIFICACION
+            $notifs = $this->notifications->set($followed, 'follow', $user->getId());
+            //CREANDO MENSAJE
             $status = "Ahora estas siguiendo a este usuario !! ";
         } else {
             $status = "No se ha podido seguir a este usuario, intente en otro momento !!";

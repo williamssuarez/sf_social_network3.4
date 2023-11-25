@@ -1,0 +1,7 @@
+notifications_page:
+  path: /notifications
+  defaults: { _controller: App\Controller\NotificationController:index }
+
+notifications_ajax:
+  path: /notifications/get
+  defaults: { _controller: App\Controller\NotificationController:countNotifications }
