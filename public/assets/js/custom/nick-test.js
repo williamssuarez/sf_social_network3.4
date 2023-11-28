@@ -5,7 +5,6 @@ $ (document).ready(function (){
         var nick = this.value;
         var boton = $(".register-input");
 
-
         $.ajax({
             url: URL + '/nick-test',
             data: {nick: nick},

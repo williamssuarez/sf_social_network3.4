@@ -9,9 +9,123 @@
 
             <div class="col-lg-6">
                 <a href="{{ path('private_message_index') }}" class="btn btn-warning">
-                    Ver mensajes enviados
+                    Ver mensajes recibidos
                 </a>
             </div>
+
+            <div class="col-lg-6">
+                <h4>Mensajes enviados</h4>
+
+                <div class="box-content box-messages">
+                    {% for message in pagination %}
+                        <div class="col-lg-12 publication-item">
+                            <div class="avatar">
+                                {% if message.emitter.image == null %}
+                                    <img src="{{ asset('assets/images/default.png') }}">
+                                {% else %}
+                                    <img src="{{ asset('uploads/users/'~message.emitter.image) }}"/>
+                                {% endif %}
+                            </div>
+
+                            <div class="publication-item-content">
+                                <p>
+                                    <a class="pub-name-link" href="{{ path('user_profile', {'nickname': message.emitter.nick}) }}">
+                                        {{ message.emitter.name }} {{ message.emitter.surname }}
+                                    </a>
+                                    -
+                                    @{{ message.emitter.nick }}
+                                    -
+                                    <span class="pub-date">
+                                    {{ message.createdAt|long_time }}
+                                </span>
+                                </p>
+
+                                <p>{{ message.message }}</p>
+
+                                {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+                                {% if(message.file is defined) and (message.file != null) %}
+                                    {# Obtener la cadena del documento #}
+                                    {% set documento = message.file %}
+
+                                    {# Dividir la cadena utilizando el punto como separador #}
+                                    {% set partes = documento|split('.') %}
+
+                                    {# Obtener la última parte (extensión) #}
+                                    {% set extension = partes|last %}
+
+                                    {# Ahora puedes utilizar la extensión para decidir qué icono mostrar #}
+                                    {% if extension == 'pdf' %}
+                                        {# Mostrar el icono para PDF #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~message.file) }}" class="btn-doc-pdf glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-file-pdf" style="color: #c22929;"></i>
+                                        </a>
+
+                                    {% elseif extension == 'xlsx' or extension == 'xls' %}
+                                        {# Mostrar el icono para Excel #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~message.file) }}" class="btn-doc-excel glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-file-excel" style="color: #2eae1e;"></i>
+                                        </a>
+                                    {% elseif extension == 'docx' or extension == 'doc' %}
+                                        {# Mostrar el icono para Word #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~message.file) }}" class="btn-doc-word glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-file-word" style="color: #1a63e0;"></i>
+                                        </a>
+                                    {% elseif extension == 'pptx' or extension == 'ppt' %}
+                                        {# Mostrar el icono para PowerPoint #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~message.file) }}" class="btn-doc-powerpoint glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-file-powerpoint" style="color: #bf8a18;"></i>
+                                        </a>
+                                    {% elseif extension == 'rar' or extension == 'zip' %}
+                                        {# Mostrar el icono para comprimidos #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~publication.document) }}" class="btn-doc-comprimido glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-folder" style="color: #b81dd7;"></i>
+                                        </a>
+                                    {% elseif extension == 'txt' %}
+                                        {# Mostrar el icono para comprimidos #}
+
+                                        <a href="{{ asset('uploads/messages/documents/'~message.file) }}" class="btn-doc-texto glyphicon"
+                                           aria-hidden="true" target="_blank">
+                                            <i class="fa-solid fa-file" style="color: #696969;"></i>
+                                        </a>
+                                    {% else %}
+                                        {# Mostrar un icono predeterminado para otras extensiones #}
+                                        <i class="fa fa-file"></i>
+                                    {% endif %}
+                                {% endif %}
+                                {# **OBTENIENDO LA EXTENSION DEL ARHCIVO** #}
+
+                                {% if(message.image is defined) and (message.image != null) %}
+                                    <div class="clearfix"></div>
+
+                                    <a href="{{ asset('uploads/messages/images/'~message.image) }}" class="btn-image"
+                                       aria-hidden="true" target="_blank" >
+                                        <i class="fa-regular fa-image" style="color: #696969;"></i>
+                                    </a>
+
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr/>
+                        </div>
+                    {% endfor %}
+
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+
+            </div>
+
             <div class="clearfix"></div>
         </div>
     </div>
