@@ -31,30 +31,30 @@ class PrivateMessage
     /**
      * @var string|null
      *
-     * @ORM\Column(name="file", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="file", type="string", length=255, nullable=true)
      */
-    private $file = 'NULL';
+    private $file;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $image = 'NULL';
+    private $image;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="readed", type="string", length=3, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="readed", type="string", length=3, nullable=true)
      */
-    private $readed = 'NULL';
+    private $readed;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $createdAt = 'NULL';
+    private $createdAt;
 
     /**
      * @var \User

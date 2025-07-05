@@ -26,65 +26,65 @@ class User implements UserInterface, \Serializable
     /**
      * @var string|null
      *
-     * @ORM\Column(name="role", type="string", length=20, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="role", type="string", length=20, nullable=true)
      */
-    private $role = '';
+    private $role;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $email = '';
+    private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="surname", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="surname", type="string", length=255, nullable=true)
      */
-    private $surname = '';
+    private $surname;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
-    private $password = '';
+    private $password;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="nick", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="nick", type="string", length=50, nullable=true)
      */
-    private $nick = '';
+    private $nick;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="bio", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="bio", type="string", length=255, nullable=true)
      */
-    private $bio = '';
+    private $bio;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="active", type="string", length=2, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="active", type="string", length=2, nullable=true)
      */
-    private $active = '';
+    private $active;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $image = '';
+    private $image;
 
     //CREANDO METODOS PERSONALIZADOS
     public function getUsername(){

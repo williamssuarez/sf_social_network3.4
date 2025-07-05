@@ -24,9 +24,9 @@ class Notification
     /**
      * @var string|null
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
-    private $type = 'NULL';
+    private $type;
 
     /**
      * @var int|null
@@ -38,23 +38,23 @@ class Notification
     /**
      * @var string|null
      *
-     * @ORM\Column(name="readed", type="string", length=3, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="readed", type="string", nullable=true)
      */
-    private $readed = 'NULL';
+    private $readed;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $createdAt = 'NULL';
+    private $createdAt;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="extra", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="extra", type="string", length=100, nullable=true)
      */
-    private $extra = 'NULL';
+    private $extra;
 
     /**
      * @var \User

@@ -26,35 +26,35 @@ class Publication
      *
      * @ORM\Column(name="text", type="text", length=16777215, nullable=true)
      */
-    private $text = '';
+    private $text;
 
     /**
      * @var string
      *
      * @ORM\Column(name="document", type="string", length=100, nullable=true)
      */
-    private $document = '';
+    private $document;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $image = '';
+    private $image;
 
     /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=30, nullable=true)
      */
-    private $status = '';
+    private $status;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $createdAt = '';
+    private $createdAt;
 
     /**
      * @var \User
