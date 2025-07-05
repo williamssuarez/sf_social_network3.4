@@ -37,5 +37,7 @@ symfony server:start
 ```
 Y dirijase a la ruta http://127.0.0.1:8000/register en su navegador para registrarse por primera vez (Recuerde que la direccion y el puerto pueden variar)
 
+Para terminar el servidor local presione Ctrl + C
+
 ## Sobre el Proyecto
 Este proyecto fue realizado con Symfony 3 (descontinuado) hace 2 años con el proposito de practicar y aprender mas sobre el framework. Actualmente cuenta con funciones de creacion de publicaciones (funciones como crear publicaciones, eliminarlas y verlas), funciones de cuentas de usuario comunes en redes sociales (como registrarse, editar datos personales, seguir a otros usuarios y dar like a publicaciones), funciones de notificaciones a los usuarios(cuando alguien te sigue, cuando le dan like a tu publicacion) y funciones de mensajeria (actualmente solo puedes enviar mensajes, y ver los enviados, pero no se ha implementado manera de ver mensajes recibidos). A pesar de que fue por poco tiempo este proyecto me ayudó mucho a entender arquitecturas MVC, programacion orientada a objetos con PHP y fue mi primer proyecto mas o menos serio usando el framework, a pesar de que no he encontrado el tiempo para continuarlo, siempre lo recordaré con cariño.
